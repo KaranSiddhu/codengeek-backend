@@ -239,7 +239,7 @@ exports.signOut = (req, res) => {
 exports.loggedIn = (req, res) => {
   try {
     let token = req.cookies.token;
-
+    console.log("TOKKEN🔥", token);
     if (!token) {
       return res.json(false);
     }
@@ -254,10 +254,27 @@ exports.loggedIn = (req, res) => {
 
 const sendToken = (user, statusCode, res) => {
   const token = user.getSignedToken();
-  res
-    .status(statusCode)
-    .cookie("token", token, { httpOnly: true, samesite: "none", secure: true })
-    .send("Cookie Send");
+  // res
+  //   .status(statusCode)
+  //   .cookie("token", token, { httpOnly: true, sameSite: "none", secure: true })
+  //   .send("Cookie Send");
+
+    res
+      .status(statusCode)
+      .cookie("token", token, {
+        httpOnly: true,
+        sameSite:
+          process.env.NODE_ENV === "development"
+            ? "lax"
+            : process.env.NODE_ENV === "production" && "none",
+        secure:
+          process.env.NODE_ENV === "development"
+            ? false
+            : process.env.NODE_ENV === "production" && true,
+      })
+      .send("Cookie Send");
+
+  
   
   // res.status(statusCode).json({
   //   success: true,
