@@ -220,30 +220,22 @@ exports.verifyEmail = async (req, res) => {
 };
 
 exports.signOut = (req, res) => {
+
+  res.clearCookie("token");
+
   // res
   // .cookie("token", "", {
   //   httpOnly: true,
+  //   sameSite:
+  //     process.env.NODE_ENV === "development"
+  //       ? "lax"
+  //       : process.env.NODE_ENV === "production" && "none",
+  //   secure:
+  //     process.env.NODE_ENV === "development"
+  //       ? false
+  //       : process.env.NODE_ENV === "production" && true,
   //   expires: new Date(0),
-  //   secure: true,
-  //   sameSite: "none",
   // })
-  // .send();
-
-  // res.clearCookie("token");
-
-  res
-  .cookie("token", "", {
-    httpOnly: true,
-    sameSite:
-      process.env.NODE_ENV === "development"
-        ? "lax"
-        : process.env.NODE_ENV === "production" && "none",
-    secure:
-      process.env.NODE_ENV === "development"
-        ? false
-        : process.env.NODE_ENV === "production" && true,
-    expires: new Date(0),
-  })
 
   res.status(200).json({
     status: "success",
@@ -269,27 +261,26 @@ exports.loggedIn = (req, res) => {
 
 const sendToken = (user, statusCode, res) => {
   const token = user.getSignedToken();
-  // res
-  //   .status(statusCode)
-  //   .cookie("token", token, { httpOnly: true, sameSite: "none", secure: true })
-  //   .send("Cookie Send");
+  res
+    .status(statusCode)
+    .cookie("token", token, { httpOnly: true, sameSite: "none", secure: true })
+    .send("Cookie Send");
 
-    res
-      .status(statusCode)
-      .cookie("token", token, {
-        httpOnly: true,
-        sameSite:
-          process.env.NODE_ENV === "development"
-            ? "lax"
-            : process.env.NODE_ENV === "production" && "none",
-        secure:
-          process.env.NODE_ENV === "development"
-            ? false
-            : process.env.NODE_ENV === "production" && true,
-      })
-      .send("Cookie Send");
+    // res
+    //   .status(statusCode)
+    //   .cookie("token", token, {
+    //     httpOnly: true,
+    //     sameSite:
+    //       process.env.NODE_ENV === "development"
+    //         ? "lax"
+    //         : process.env.NODE_ENV === "production" && "none",
+    //     secure:
+    //       process.env.NODE_ENV === "development"
+    //         ? false
+    //         : process.env.NODE_ENV === "production" && true,
+    //   })
+    //   .send("Cookie Send");
 
-  
   
   // res.status(statusCode).json({
   //   success: true,
