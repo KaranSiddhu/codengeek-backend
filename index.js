@@ -14,10 +14,9 @@ const privateRoute = require("./routes/privateRoute");
 
 app.use(express.json());
 
-
 app.use(
   cors({
-    origin:["https://www.codengeek.tech", "http://localhost:3000"],
+    origin: ["https://suspicious-mclean-b84c5d.netlify.app", "http://localhost:3000"],
     credentials: true
   })
 );

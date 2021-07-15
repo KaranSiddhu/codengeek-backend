@@ -258,7 +258,7 @@ const sendToken = (user, statusCode, res) => {
     .status(statusCode)
     .cookie("token", token, { httpOnly: true, secure: true, sameSite: "none" })
     .send("Cookie Send");
-
+  
   // res.status(statusCode).json({
   //   success: true,
   //   token,
