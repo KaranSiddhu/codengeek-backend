@@ -33,18 +33,13 @@ exports.protect = async (req, res, next) => {
   }
 };
 
-// exports.emailVerify = async (req, res, next) => {
-//   const { email } = req.body;
-
-//   try {
-//     const user = await User.findOne({ email });
-
-//     if (!user) {
-//       return res.status(401).json({
-//         success: false,
-//         error: "User not found"
-//       });
-//     }
-
-//   } catch (error) {}
-// };
+exports.isAdmin = (req, res, next) => {
+  if(req.user.role === 0){
+    return res.status(403).json({
+      success:false,
+      message:'Access denied, you are not admin'
+    });
+  }
+  console.log('YOU ARE ADMIN ♥');
+  next();
+}

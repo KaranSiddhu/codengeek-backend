@@ -42,12 +42,18 @@ const userSchema = new mongoose.Schema(
 );
 
 userSchema.pre("save", async function (next) {
+  
   if (!this.isModified("password")) {
     next();
   }
+  
+  try{
+    const salt = await bcrypt.genSalt(10);
+    this.password = await bcrypt.hash(this.password, salt);
+  }catch(err){
+    console.log("ERROR 🤚 - ", err);
+  }
 
-  const salt = await bcrypt.genSalt(10);
-  this.password = await bcrypt.hash(this.password, salt);
   next();
 });
 
@@ -94,5 +100,5 @@ userSchema.methods.getEmailVerifyToken = function () {
 
 }
 
-const User = mongoose.model("User", userSchema);
-module.exports = User;
+module.exports = mongoose.model("User", userSchema);
+

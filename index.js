@@ -8,15 +8,20 @@ const morgan = require("morgan");
 
 //NOTE Routes
 const authRoutes = require("./routes/authRoute");
-const privateRoute = require("./routes/privateRoute");
+const userRoutes = require("./routes/userRoute");
+const blogRoutes = require("./routes/blogRoutes");
+const categoryRoutes = require("./routes/categoryRoutes");
 
 //NOTE Middlewares
-
 app.use(express.json());
 
 app.use(
   cors({
-    origin: ["https://suspicious-mclean-b84c5d.netlify.app", "http://localhost:3000"],
+    origin: [
+      "https://codengeek.tech",
+      "https://suspicious-mclean-b84c5d.netlify.app",
+      "http://localhost:3000"
+    ],
     credentials: true
   })
 );
@@ -25,7 +30,9 @@ app.use(morgan("dev"));
 
 //NOTE Routes
 app.use("/api/v1/", authRoutes);
-app.use("/api/v1/", privateRoute);
+app.use("/api/v1/", userRoutes);
+app.use("/api/v1/", blogRoutes);
+app.use("/api/v1/", categoryRoutes);
 
 app.get("/", (req, res) => res.send("The codengeek server is running🚀"));
 
