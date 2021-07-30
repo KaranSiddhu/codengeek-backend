@@ -97,7 +97,7 @@ userSchema.methods.getEmailVerifyToken = function () {
   this.emailVerifyTokenExpire = Date.now() + 10 * (60 * 1000);
 
   return verifyToken;
-
+  
 }
 
 module.exports = mongoose.model("User", userSchema);
