@@ -3,6 +3,8 @@ const bcrypt = require("bcryptjs");
 const crypto = require("crypto");
 const jwt = require("jsonwebtoken");
 
+const { ObjectId } = mongoose.Schema;
+
 const userSchema = new mongoose.Schema(
   {
     fullName: {
@@ -42,15 +44,14 @@ const userSchema = new mongoose.Schema(
 );
 
 userSchema.pre("save", async function (next) {
-  
   if (!this.isModified("password")) {
     next();
   }
-  
-  try{
+
+  try {
     const salt = await bcrypt.genSalt(10);
     this.password = await bcrypt.hash(this.password, salt);
-  }catch(err){
+  } catch (err) {
     console.log("ERROR 🤚 - ", err);
   }
 
@@ -82,7 +83,7 @@ userSchema.methods.getResetPasswordToken = function () {
 
   this.resetPasswordToken = crypto.createHash("sha256").update(resetToken).digest("hex");
 
-  //NOTE (60 * 1000) means 60,000 ms or 1 min 
+  //NOTE (60 * 1000) means 60,000 ms or 1 min
   this.resetPasswordExpire = Date.now() + 10 * (60 * 1000);
 
   return resetToken;
@@ -90,15 +91,13 @@ userSchema.methods.getResetPasswordToken = function () {
 
 userSchema.methods.getEmailVerifyToken = function () {
   const verifyToken = crypto.randomBytes(20).toString("hex");
-  
+
   this.emailVerifyToken = crypto.createHash("sha256").update(verifyToken).digest("hex");
 
-  //NOTE (60 * 1000) means 60,000 ms or 1 min 
+  //NOTE (60 * 1000) means 60,000 ms or 1 min
   this.emailVerifyTokenExpire = Date.now() + 10 * (60 * 1000);
 
   return verifyToken;
-  
-}
+};
 
 module.exports = mongoose.model("User", userSchema);
-

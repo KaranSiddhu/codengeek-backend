@@ -5,6 +5,8 @@ const app = express();
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
 const morgan = require("morgan");
+const path = require("path");
+
 
 //NOTE Routes
 const authRoutes = require("./routes/authRoute");
@@ -14,6 +16,7 @@ const categoryRoutes = require("./routes/categoryRoutes");
 
 //NOTE Middlewares
 app.use(express.json());
+
 
 app.use(
   cors({
@@ -25,6 +28,8 @@ app.use(
     credentials: true
   })
 );
+
+// app.use("/images", express.static(path.join(__dirname, "/images")));
 
 app.use(cookieParser());
 app.use(morgan("dev"));

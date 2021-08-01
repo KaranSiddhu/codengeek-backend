@@ -2,6 +2,7 @@ const User = require("../models/User");
 const Blog = require("../models/Blog");
 
 exports.getPrivateData = (req, res) => {
+
   res.status(200).json({
     success: true,
     user: req.user

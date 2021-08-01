@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const { ObjectId } = mongoose.Schema;
 
 const blogSchema = new mongoose.Schema(
   {
@@ -11,16 +12,27 @@ const blogSchema = new mongoose.Schema(
       required: true
     },
     photo: {
-      data:Buffer,
-      contentType:String
-    },
-    userEmail: {
+      // data: Buffer,
+      // contentType: String
       type: String,
-      required: true
     },
+    // userEmail: {
+    //   type: String,
+    //   required: true
+    // },
     categories: {
       type: Array
+    },
+
+    user: {
+      type: ObjectId,
+      ref: "User",
+      required:true
+    },
+    cloudinary_id: {
+      type: String,
     }
+
   },
   { timestamps: true }
 );

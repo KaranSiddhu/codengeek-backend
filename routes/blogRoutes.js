@@ -9,9 +9,10 @@ const {
   photo
 } = require("../controller/blogController");
 const { protect } = require("../middlewares/auth");
+const uploadImg = require("../middlewares/uploadImg");
 
 //NOTE Create blog
-router.post("/blog", createBlog);
+router.post("/blog", uploadImg, createBlog);
 
 //NOTE update blog
 router.put("/blog/update/:blogId", protect, updateBlog);
@@ -21,7 +22,7 @@ router.delete("/blog/delete/:blogId", protect, deleteBlog);
 
 //NOTE get a blog
 router.get("/blog/:blogId", getBlog);
-router.get("/blog/photo/:blogId", photo, getBlog);
+// router.get("/blog/photo/:blogId",  getBlog);
 
 //NOTE get all blog
 router.get("/blogs", getAllBlog);
