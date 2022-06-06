@@ -271,6 +271,7 @@ exports.getBlog = async (req, res) => {
 
 exports.getAllBlog = async (req, res) => {
   const userId = req.query.user;
+  console.log("USERID - ", userId);
   // const category = req.query.cat;
   try {
     let blogs;

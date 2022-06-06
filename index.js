@@ -7,7 +7,6 @@ const cors = require("cors");
 const morgan = require("morgan");
 const path = require("path");
 
-
 //NOTE Routes
 const authRoutes = require("./routes/authRoute");
 const userRoutes = require("./routes/userRoute");
@@ -17,12 +16,11 @@ const categoryRoutes = require("./routes/categoryRoutes");
 //NOTE Middlewares
 app.use(express.json());
 
-
 app.use(
   cors({
     origin: [
       "https://codengeek.tech",
-      "https://suspicious-mclean-b84c5d.netlify.app",
+      "https://codengeek.netlify.app/",
       "http://localhost:3000"
     ],
     credentials: true
