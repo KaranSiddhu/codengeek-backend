@@ -19,7 +19,7 @@ app.use(express.json());
 app.use(
   cors({
     origin: [
-      "https://codengeek.netlify.app/",
+      "https://codengeek.netlify.app",
       "http://localhost:3000"
     ],
     credentials: true
