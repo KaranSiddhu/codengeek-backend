@@ -5,10 +5,8 @@ const jwt = require("jsonwebtoken");
 
 exports.register = async (req, res) => {
   try {
-    
     const user = await User.create(req.body);
     sendToken(user, 201, res);
-
   } catch (error) {
     res.status(500).json({
       success: false,
@@ -72,7 +70,7 @@ exports.forgotPassword = async (req, res) => {
 
     await user.save();
 
-    const resetUrl = `https://www.codengeek.tech/passwordreset/${resetToken}`;
+    const resetUrl = `https://codengeek.netlify.app/passwordreset/${resetToken}`;
 
     const message = `
         <h1>You have requested a password reset</h1>
@@ -154,7 +152,7 @@ exports.sendVerifyEmail = async (req, res) => {
 
   await user.save();
 
-  const verifyUrl = `https://www.codengeek.tech/email/verify/${emailVerifyToken}`;
+  const verifyUrl = `https://codengeek.netlify.app/email/verify/${emailVerifyToken}`;
 
   const message = `
             <h1>Please use the following link to Verify your email. (the link will expire in 10 minutes) :</h1>
@@ -223,15 +221,14 @@ exports.verifyEmail = async (req, res) => {
 exports.signOut = (req, res) => {
   // res.clearCookie("token");
 
-  // res.cookie("token", "", { 
+  // res.cookie("token", "", {
   //     httpOnly: true,
-  //     sameSite: "none", 
-  //     secure: true, 
-  //     expires: new Date(0) 
+  //     sameSite: "none",
+  //     secure: true,
+  //     expires: new Date(0)
   // });
 
-  res
-  .cookie("token", "", {
+  res.cookie("token", "", {
     httpOnly: true,
     sameSite:
       process.env.NODE_ENV === "development"
@@ -241,14 +238,13 @@ exports.signOut = (req, res) => {
       process.env.NODE_ENV === "development"
         ? false
         : process.env.NODE_ENV === "production" && true,
-    expires: new Date(0),
-  })
+    expires: new Date(0)
+  });
 
   res.status(200).json({
     status: "success",
     message: "Sign Out Successfully"
   });
-  
 };
 
 exports.loggedIn = (req, res) => {
@@ -262,7 +258,6 @@ exports.loggedIn = (req, res) => {
     jwt.verify(token, process.env.JWT_KEY);
     res.send(true);
   } catch (err) {
-  
     res.json(false);
   }
 };
@@ -273,7 +268,7 @@ const sendToken = (user, statusCode, res) => {
   //   .status(statusCode)
   //   .cookie("token", token, { httpOnly: true, sameSite: "none", secure: true })
   //   .send("Cookie Send");
-  
+
   res
     .status(statusCode)
     .cookie("token", token, {
@@ -285,7 +280,7 @@ const sendToken = (user, statusCode, res) => {
       secure:
         process.env.NODE_ENV === "development"
           ? false
-          : process.env.NODE_ENV === "production" && true,
+          : process.env.NODE_ENV === "production" && true
     })
     .send("Cookie Send");
 
